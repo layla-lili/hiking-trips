@@ -10,10 +10,11 @@ const Trip = (props) => {
       <Link to={`/trips/${trip.city}`}>
         <img src={trip.image} alt={trip.name} />
       </Link>
-      <p> {trip.city}</p>
+      <p> {trip.rating}/5</p>
+      {/* <p> {trip.city}</p>
       <p> {trip.difficulty} </p>
       <p> {trip.length} KM</p>
-      <p> {trip.rating}/5</p>
+      <p> {trip.rating}/5</p> */}
     </TripWrapper>
   );
 };
