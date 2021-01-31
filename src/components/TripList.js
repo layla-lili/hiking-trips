@@ -1,46 +1,31 @@
 // Styling
-import { ListWrapper } from "../styles";
+import { ListWrapper, ThemeButton } from "../styles";
 // Components
 import Trip from "./Trip";
 import SearchBar from "./SearchBar";
 import { useState } from "react";
 
-
-
 const TripList = (props) => {
   const [query, setQuery] = useState("");
-
-
-
-//   const show = product ? (
-//     <ProductDetail
-//       product={product}
-//       setProduct={setProduct}
-//       deleteProduct={deleteProduct}
-//     />
-//   ) : (
-//     <ProductList
-//       products={_products}
-//       setProduct={setProduct}
-//       deleteProduct={deleteProduct}
-//     />
-//   );
+  const [currentMeasure, setMeasure] = useState("km");
 
   const tripList = props.trips
-    .filter((trip) =>
-      trip.name.toLowerCase().includes(query.toLowerCase())
-    )
+    .filter((trip) => trip.name.toLowerCase().includes(query.toLowerCase()))
     .map((trip) => (
-      <Trip
-        trip={trip}
-        key={trip.id}
-       
-      />
+      <Trip currentMeasure={currentMeasure} trip={trip} key={trip.id} />
     ));
 
-  return (
-   <>
+  const convert = () => {
+    if (currentMeasure === "km") {
+      setMeasure("mile");
+    } else {
+      setMeasure("km");
+    }
+  };
 
+  return (
+    <>
+      <ThemeButton onClick={convert}>Convert</ThemeButton>
       <SearchBar setQuery={setQuery} />
       <ListWrapper>{tripList}</ListWrapper>
     </>

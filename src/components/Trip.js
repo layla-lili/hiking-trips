@@ -3,6 +3,14 @@ import { TripWrapper } from "../styles";
 
 const Trip = (props) => {
   const trip = props.trip;
+  const currentMeasure = props.currentMeasure;
+
+  const show =
+    currentMeasure === "km" ? (
+      <p>{trip.length} KM</p>
+    ) : (
+      <p> {parseInt(trip.length * 0.621371)} Mile</p>
+    );
 
   return (
     <TripWrapper>
@@ -10,11 +18,7 @@ const Trip = (props) => {
       <Link to={`/trips/${trip.city}`}>
         <img src={trip.image} alt={trip.name} />
       </Link>
-      <p> {trip.rating}/5</p>
-      {/* <p> {trip.city}</p>
-      <p> {trip.difficulty} </p>
-      <p> {trip.length} KM</p>
-      <p> {trip.rating}/5</p> */}
+      <p>{show}</p>
     </TripWrapper>
   );
 };
