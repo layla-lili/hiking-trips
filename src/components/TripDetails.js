@@ -6,7 +6,7 @@ import RecomendedTrips from "./RecomendedTrips";
 const TripDetails = (props) => {
   const citySlug = useParams().citySlug;
   const trip = props.trips.find((trip) => trip.city === citySlug);
-  if (!trip) return <Redirect to="/trips" />;
+  // if (!trip) return <Redirect to="/trips" />;
 
   // const recommendedTrips = props.trips
   //   .filter((recoTrip) => recoTrip.rating >= trip.rating)

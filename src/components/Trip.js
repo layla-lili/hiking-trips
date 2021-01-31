@@ -15,7 +15,7 @@ const Trip = (props) => {
   return (
     <TripWrapper>
       <p> {trip.name}</p>
-      <Link to={`/trips/${trip.city}`}>
+      <Link to={`/${trip.city}`}>
         <img src={trip.image} alt={trip.name} />
       </Link>
       <p>{show}</p>

@@ -18,12 +18,12 @@ function App() {
     <>
       <GlobalStyle />
       <Switch>
-        <Route path="/trips/:citySlug">
-          <TripDetails trips={_trips} />
+        <Route path="/trips/:difficultySlug">
+          <TripList trips={_trips} />
         </Route>
 
-        <Route path="/trips/:difficultyURL">
-          <TripList trips={_trips} />
+        <Route path="/:citySlug">
+          <TripDetails trips={_trips} />
         </Route>
 
         <Route path="/">

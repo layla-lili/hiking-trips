@@ -6,8 +6,11 @@ import Trip from "./Trip";
 import SearchBar from "./SearchBar";
 import { useState } from "react";
 import { Range, getTrackBackground } from "react-range";
-import { useParams, Redirect, useHistory } from "react-router-dom";
+import { useParams, Redirect, useHistory, withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
+import DropDown from "./DropDown";
+
+const Menu = withRouter(DropDown);
 
 const TripList = (props) => {
   const [query, setQuery] = useState("");
@@ -15,6 +18,7 @@ const TripList = (props) => {
   const [length, setLength] = useState({ values: [10] });
   const [difficulty, setDifficulty] = useState("");
 
+  const difficultySlug = useParams().difficultySlug;
   const history = useHistory();
 
   const STEP = 1;
@@ -38,8 +42,14 @@ const TripList = (props) => {
   };
 
   const handleChange = (e) => {
+    // if (difficultySlug === "easy") {
+    //   setDifficulty(difficultySlug);
+    // }
     setDifficulty(e.target.value);
-    history.push(`/${e.target.value}`);
+    // <Redirect to={`/trips/${e.target.value}`} />;
+
+    console.log("1" + history.location.pathname);
+    // history.push(`/${e.target.value}`);
   };
 
   return (
@@ -130,18 +140,7 @@ const TripList = (props) => {
           {parseInt(length.values[0].toFixed(1))}
         </output>
       </div>
-
-      <select
-        name="difficulties"
-        id="difficulty-select"
-        onChange={handleChange}
-      >
-        <option value="">--Please choose a difficulty--</option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-      </select>
-
+      <DropDown handleChange={handleChange} />
       <ListWrapper>{tripList}</ListWrapper>
     </>
   );
