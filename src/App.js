@@ -1,7 +1,6 @@
 // Styling
 import { GlobalStyle } from "./styles";
 import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
 
 // Components
 import TripDetails from "./components/TripDetails";
@@ -18,9 +17,9 @@ function App() {
     <>
       <GlobalStyle />
       <Switch>
-        <Route path="/trips/:difficultySlug">
+        {/* <Route path="/trips/:difficultySlug">
           <TripList trips={_trips} />
-        </Route>
+        </Route> */}
 
         <Route path="/:citySlug">
           <TripDetails trips={_trips} />

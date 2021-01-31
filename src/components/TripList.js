@@ -6,11 +6,8 @@ import Trip from "./Trip";
 import SearchBar from "./SearchBar";
 import { useState } from "react";
 import { Range, getTrackBackground } from "react-range";
-import { useParams, Redirect, useHistory, withRouter } from "react-router-dom";
-import { Link } from "react-router-dom";
 import DropDown from "./DropDown";
-
-const Menu = withRouter(DropDown);
+// import { useHistory } from "react-router-dom";
 
 const TripList = (props) => {
   const [query, setQuery] = useState("");
@@ -18,8 +15,7 @@ const TripList = (props) => {
   const [length, setLength] = useState({ values: [10] });
   const [difficulty, setDifficulty] = useState("");
 
-  const difficultySlug = useParams().difficultySlug;
-  const history = useHistory();
+  // const history = useHistory();
 
   const STEP = 1;
   const MIN = 1;
@@ -42,13 +38,7 @@ const TripList = (props) => {
   };
 
   const handleChange = (e) => {
-    // if (difficultySlug === "easy") {
-    //   setDifficulty(difficultySlug);
-    // }
     setDifficulty(e.target.value);
-    // <Redirect to={`/trips/${e.target.value}`} />;
-
-    console.log("1" + history.location.pathname);
     // history.push(`/${e.target.value}`);
   };
 

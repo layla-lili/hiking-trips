@@ -1,18 +1,11 @@
 // Styling
 import { DetailWrapper } from "../styles";
-import { useParams, Redirect } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import RecomendedTrips from "./RecomendedTrips";
 
 const TripDetails = (props) => {
   const citySlug = useParams().citySlug;
   const trip = props.trips.find((trip) => trip.city === citySlug);
-  // if (!trip) return <Redirect to="/trips" />;
-
-  // const recommendedTrips = props.trips
-  //   .filter((recoTrip) => recoTrip.rating >= trip.rating)
-  //   .map((trip) => (
-  //     <Trip currentMeasure={currentMeasure} trip={trip} key={trip.id} />
-  //   ));
 
   return (
     <>
