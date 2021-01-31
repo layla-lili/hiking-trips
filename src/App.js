@@ -1,6 +1,7 @@
 // Styling
 import { GlobalStyle } from "./styles";
 import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
 
 // Components
 import TripDetails from "./components/TripDetails";
@@ -19,6 +20,10 @@ function App() {
       <Switch>
         <Route path="/trips/:citySlug">
           <TripDetails trips={_trips} />
+        </Route>
+
+        <Route path="/trips/:difficultyURL">
+          <TripList trips={_trips} />
         </Route>
 
         <Route path="/">

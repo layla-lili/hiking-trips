@@ -5,23 +5,26 @@ import { ListWrapper, ThemeButton } from "../styles";
 import Trip from "./Trip";
 import SearchBar from "./SearchBar";
 import { useState } from "react";
-import { Range , getTrackBackground} from 'react-range';
+import { Range, getTrackBackground } from "react-range";
+import { useParams, Redirect, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const TripList = (props) => {
   const [query, setQuery] = useState("");
   const [currentMeasure, setMeasure] = useState("km");
-  const [length, setLength] =useState({ values: [10] });
-  // const length = { values: [50] };
-  // const setLength
+  const [length, setLength] = useState({ values: [10] });
+  const [difficulty, setDifficulty] = useState("");
+
+  const history = useHistory();
 
   const STEP = 1;
   const MIN = 1;
   const MAX = 10;
 
-
   const tripList = props.trips
     .filter((trip) => trip.name.toLowerCase().includes(query.toLowerCase()))
-     .filter((trip) => trip.length < parseInt(length.values[0].toFixed(1)))
+    .filter((trip) => trip.length <= parseInt(length.values[0].toFixed(1)))
+    .filter((trip) => trip.difficulty.includes(difficulty))
     .map((trip) => (
       <Trip currentMeasure={currentMeasure} trip={trip} key={trip.id} />
     ));
@@ -34,18 +37,20 @@ const TripList = (props) => {
     }
   };
 
+  const handleChange = (e) => {
+    setDifficulty(e.target.value);
+    history.push(`/${e.target.value}`);
+  };
+
   return (
     <>
       <ThemeButton onClick={convert}>Convert</ThemeButton>
-      
       <SearchBar setQuery={setQuery} />
-
-
-     <div
+      <div
         style={{
-          display: 'flex',
-          justifyContent: 'center',
-          flexWrap: 'wrap'
+          display: "flex",
+          justifyContent: "center",
+          flexWrap: "wrap",
         }}
       >
         <Range
@@ -59,10 +64,10 @@ const TripList = (props) => {
               {...props}
               style={{
                 ...props.style,
-                height: '16px',
-                width: '5px',
+                height: "16px",
+                width: "5px",
                 backgroundColor:
-                  index * STEP < length.values[0] ? '#548BF4' : '#ccc'
+                  index * STEP < length.values[0] ? "#548BF4" : "#ccc",
               }}
             />
           )}
@@ -72,24 +77,24 @@ const TripList = (props) => {
               onTouchStart={props.onTouchStart}
               style={{
                 ...props.style,
-                height: '36px',
-                display: 'flex',
-                width: '100%'
+                height: "36px",
+                display: "flex",
+                width: "100%",
               }}
             >
               <div
                 ref={props.ref}
                 style={{
-                  height: '5px',
-                  width: '100%',
-                  borderRadius: '4px',
+                  height: "5px",
+                  width: "100%",
+                  borderRadius: "4px",
                   background: getTrackBackground({
                     values: length.values,
-                    colors: ['#548BF4', '#ccc'],
+                    colors: ["#548BF4", "#ccc"],
                     min: MIN,
-                    max: MAX
+                    max: MAX,
                   }),
-                  alignSelf: 'center'
+                  alignSelf: "center",
                 }}
               >
                 {children}
@@ -101,31 +106,41 @@ const TripList = (props) => {
               {...props}
               style={{
                 ...props.style,
-                height: '42px',
-                width: '42px',
-                borderRadius: '4px',
-                backgroundColor: '#FFF',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                boxShadow: '0px 2px 6px #AAA'
+                height: "42px",
+                width: "42px",
+                borderRadius: "4px",
+                backgroundColor: "#FFF",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                boxShadow: "0px 2px 6px #AAA",
               }}
             >
               <div
                 style={{
-                  height: '16px',
-                  width: '5px',
-                  backgroundColor: isDragged ? '#548BF4' : '#CCC'
+                  height: "16px",
+                  width: "5px",
+                  backgroundColor: isDragged ? "#548BF4" : "#CCC",
                 }}
               />
             </div>
           )}
         />
-        <output style={{ marginTop: '30px' }}>
+        <output style={{ marginTop: "30px" }}>
           {parseInt(length.values[0].toFixed(1))}
         </output>
       </div>
-            
+
+      <select
+        name="difficulties"
+        id="difficulty-select"
+        onChange={handleChange}
+      >
+        <option value="">--Please choose a difficulty--</option>
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+      </select>
 
       <ListWrapper>{tripList}</ListWrapper>
     </>
